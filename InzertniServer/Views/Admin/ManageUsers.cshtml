@@ -1,0 +1,55 @@
+﻿@model IEnumerable<InzertniServer.Models.User>
+@{
+    ViewBag.Title = "ManageUsers";
+}
+
+<h2>ManageUsers</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Firstname
+        </th>
+        <th>
+            Lastname
+        </th>
+        <th>
+            Login
+        </th>
+        <th>
+            Password
+        </th>
+        <th>
+            Connection
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var user in Model) {
+        <tr>
+            <td>
+                @Html.ActionLink(user.FirstName, "UserDetail", "User", new { id = user.UserId }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.Login)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.Connection)
+            </td>
+            <td>
+                @Html.ActionLink("DeleteUser", "DeleteUserAdmin", new {id = user.UserId}, new {onclick = "Are You Sure About That?"})
+            </td>
+            <td>
+                @Html.ActionLink("ManageListings", "ManageListings", new { id = user.UserId })
+            </td>
+        </tr>
+    }
+
+</table>

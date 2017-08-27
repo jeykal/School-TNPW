@@ -1,0 +1,35 @@
+﻿@model InzertniServer.Models.User
+
+@{
+    ViewBag.Title = "ReportUser";
+}
+
+<h2>Report User @Model.FirstName</h2>
+@if (TempData["error-reportUser"] != null)
+{
+    <p class="alert alert-danger">@TempData["error-reportUser"]</p>
+}
+@if (TempData["success-reportUser"] != null)
+{
+    <p class="alert alert-success">@TempData["success-reportUser"]</p>
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="well">
+        <h4>Cause of report:</h4>
+        <form role="form">
+            <div class="form-group">
+                @Html.TextArea("NewReport.Cause", new { @class = "form-control", @rows = "5" })
+            </div>
+            <button type="submit" class="btn btn-warning">Report</button>
+        </form>
+    </div>
+    <hr>
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

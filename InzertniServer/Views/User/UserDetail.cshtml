@@ -1,0 +1,120 @@
+﻿@model InzertniServer.Models.User
+
+@{
+    ViewBag.Title = "UserDetail";
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <h2>UserDetail @Model.Login</h2>
+    </div>
+    <div class="col-md-2">
+        <br />
+        <a href="@Url.Action("ReportUser", "User", new {id = @Model.UserId})" class="btn btn-sm btn-warning">Report This User</a>
+    </div>
+</div>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Firstname
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            Lastname
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            Connection
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Connection)
+        </dd>
+
+    </dl>
+</div>
+
+<h3>Listings of User @Model.FirstName</h3>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Area
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var listing in Model.Listings)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(listing.ListingTitle, "ListingDetail", "Listing", new { id = listing.ListingId }, null)
+            </td>
+            <td>
+                <div class="ellipsis">
+                    @Html.DisplayFor(modelItem => listing.ListingDescription)
+                </div>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => listing.ListingPrice) €
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => listing.Area)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<h3>Comments</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="well">
+        <h4>Leave a Comment</h4>
+        <form role="form">
+            <div class="form-group">
+                @Html.TextArea("NewComment.Content", new { @class = "form-control", @rows = "5" })
+            </div>
+            <button type="submit" class="btn btn-primary">Add Comment</button>
+        </form>
+    </div>
+    <hr>
+}
+
+@foreach (var comment in Model.Comments)
+{
+
+    <div class="media">
+        <div class="media-body">
+            <h4 class="media-heading">
+                @comment.Author
+                <small>@comment.Created</small>
+            </h4>
+            @comment.Content
+        </div>
+    </div>
+    <br />
+}
+

@@ -1,0 +1,50 @@
+﻿@model InzertniServer.Models.User
+@{
+    ViewBag.Title = "ManageListings";
+}
+
+<h2>Listings Of @Model.FirstName</h2>
+
+<div>
+    <table class="table table-hover">
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Area
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Listings)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.ListingTitle, "ListingDetail", "Listing", new { id = item.ListingId }, null)
+                </td>
+                <td>
+                    <div class="ellipsis">
+                        @Html.DisplayFor(modelItem => item.ListingDescription)
+                    </div>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ListingPrice) €
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Area)
+                </td>
+                <td>
+                    @Html.ActionLink("DeleteListing", "DeleteListingAdmin", new { id = item.ListingId }, new { onclick = "Are You Sure About That ?" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

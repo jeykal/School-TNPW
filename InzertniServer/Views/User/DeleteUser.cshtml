@@ -1,0 +1,12 @@
+﻿@model InzertniServer.Models.User
+
+@{
+    ViewBag.Title = "DeleteUser";
+}
+
+<h2>Delete User</h2>
+
+<h3>Are You Sure You Want To Delete User @User.Identity.Name? All The Listings Will Be Deleted !</h3>
+
+@Html.ActionLink("Delete" + @User.Identity.Name, "RemoveUser", "User", new { @class = "btn btn-danger" })
+@Html.ActionLink("Cancel", "ShowProfile", "User", new { @class = "btn btn-default" })

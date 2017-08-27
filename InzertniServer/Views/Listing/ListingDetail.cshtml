@@ -1,0 +1,122 @@
+﻿@model InzertniServer.Models.Listing
+
+@{
+    ViewBag.Title = "ListingDetail";
+}
+
+<div class="container">
+
+   
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                @Model.ListingTitle
+                <small>@Model.Category.CategoryName</small>
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-8">
+            @if (Model.Photos.Count > 0)
+            {
+                var mainPicture = Model.Photos.First();
+                <img class="img-responsive" src="@Url.Content("~/uploads/photos/" + mainPicture.PhotoName)" alt="Listing Picture">
+            }
+            else
+            {
+                <img class="img-responsive" src="@Url.Content("~/assets/not-available.jpg")" alt="No Picture Available">
+            }
+
+        </div>
+
+        <div class="col-md-4">
+            <h3>Description</h3>
+            <p>@Model.ListingDescription</p>
+            <h3>Listing Details</h3>
+            <dl class="dl-horizontal">
+                <dt>
+                    Listing Price
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ListingPrice) Kč
+                </dd>
+
+                <dt>
+                    Area
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Area)
+                </dd>
+
+                <dt>
+                    Listed
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ListingDate)
+                </dd>
+
+                <dt>
+                    Listed By
+                </dt>
+
+                <dd>
+                    @Html.ActionLink(Model.User.Login, "UserDetail", "User", new { id = Model.User.UserId }, new {@class="btn btn-default btn-xs"})
+                </dd>
+
+                <dt>
+                    Connection
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.User.Connection)
+                </dd>
+
+                <dt>
+                    Tags
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ListingTags)
+                </dd>
+            </dl>
+        </div>
+
+    </div>
+</div>
+
+<hr/>
+
+<h3>Listing Photos</h3>
+<div class="container">
+    <div class="row">
+
+        @if (Model.Photos.Count > 0)
+        {
+            foreach (var picture in Model.Photos)
+            {
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a href="@Url.Content("~/uploads/photos/" + picture.PhotoName)" data-lightbox="ad-photos" class="thumbnail">
+                        <img class="img-responsive" src="@Url.Action("GetThumbnail","Photo", new {pictureId = picture.PhotoId})" alt="Photo Thumbnail">
+                    </a>
+                </div>
+            }
+        }
+        else
+
+        {
+            <h4>Listing Has No Photos Added</h4>
+        }
+
+            
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-1.9.1.min.js"></script>
+<script src="~/Scripts/lightbox-2.6.min.js"></script>
+<script type="text/javascript"></script>

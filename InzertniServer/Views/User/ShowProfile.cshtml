@@ -1,0 +1,94 @@
+﻿@model InzertniServer.Models.User
+
+@{
+    ViewBag.Title = "ShowProfile";
+}
+
+<h2>ShowProfile</h2>
+
+<h2>Profile (@User.Identity.Name)</h2>
+
+<div>
+    @Html.ActionLink("Change Details", "EditUser", "User", new { @class = "btn btn-default" })
+    @Html.ActionLink("Delete Profie", "DeleteUser", "User", new { @class = "btn btn-default" })
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Firstname
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            Lastname
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            Login
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+
+        <dt>
+            Connection(Email or Phone Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Connection)
+        </dd>
+
+    </dl>
+</div>
+<h3>Moje inzeráty</h3>
+<table class="table table-hover">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Area
+        </th>
+        <th>
+            Edit
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var listing in Model.Listings)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(listing.ListingTitle, "ListingDetail", "Listing", new { id = listing.ListingId }, null)
+            </td>
+            <td>
+                <div class="ellipsis">
+                    @Html.DisplayFor(modelItem => listing.ListingDescription)
+                </div>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => listing.ListingPrice) €
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => listing.Area)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditListing", "Listing", new { id = listing.ListingId }, null) | @Html.ActionLink("Delete", "DeleteListing", "Listing", new { id = listing.ListingId }, new { onclick = "Are You Sure You Want To Delete This Listing ?" })
+            </td>
+        </tr>
+    }
+
+</table>
